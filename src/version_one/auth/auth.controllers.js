@@ -1,9 +1,15 @@
 const asyncHandler = require('../../utils/programming/asyncHandler');
 const customError = require('../../utils/error/customError');
+const { success } = require('../../utils/error/consoleFonts');
 
 module.exports = {
     Login: asyncHandler(async (req, res) => {
+        const { _id } = req.project;
 
+        res.json({
+            success: true,
+            message: 'Login'
+        })
     }),
     Signup: asyncHandler(async (req, res) => {
 
@@ -15,9 +21,6 @@ module.exports = {
 
     }),
     VerifyEmail: asyncHandler(async (req, res) => {
-
-    }),
-    GetCurrentUser: asyncHandler(async (req, res) => {
 
     })
 }
