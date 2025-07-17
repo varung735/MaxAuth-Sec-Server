@@ -9,7 +9,7 @@ const main_server_url = env_config.env === enviornment.local ? env_config.main_s
 
 const check_api_key_and_origin = asyncHandler(async (req, res, next) => {
     const { apiKey } = req.query;
-    const origin = req.headers.origin;
+    const origin = req.get('host');
     const url = `${main_server_url}/api/v1/projects/get/api_key/project?api_key=${apiKey}`;
     const redisClient = getRedisClient();
     let project;
@@ -25,17 +25,17 @@ const check_api_key_and_origin = asyncHandler(async (req, res, next) => {
     if(project === null) {
         const response = await axios.get(url);
 
-        if(!response.success) {
+        if(!response.data.success) {
             throw new customError('Project Doesnot Exists', 404);
         }
 
-        getRedisClient.set(`project:${response.apiKey}`, JSON.stringify(response.project));
-        project = response.project;
+        redisClient.set(`project:${response.data.project.apiKey}`, JSON.stringify(response.data.project));
+        project = response.data.project;
     }
 
     // console.log(project);
 
-    req.project = JSON.parse(project);
+    req.project = project;
     next();
 });
 

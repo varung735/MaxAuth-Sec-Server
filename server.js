@@ -1,5 +1,5 @@
 const app = require('./app');
-const connectDB = require('./src/configurations/db_config');
+const {connectDB} = require('./src/configurations/db_config');
 const env_config = require('./src/configurations/env_configs');
 const { connectToRedis } = require('./src/configurations/redis_config');
 const consoleFonts = require('./src/utils/error/consoleFonts');

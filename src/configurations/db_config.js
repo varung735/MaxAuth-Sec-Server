@@ -12,4 +12,6 @@ const connectDB = () => {
     });
 }
 
-module.exports = connectDB;
+const db = mongoose.connection;
+
+module.exports = { connectDB, db };
